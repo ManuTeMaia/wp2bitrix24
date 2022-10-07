@@ -1,4 +1,5 @@
 .idea
+.DS_Store
 
 ### WordPress template
 # ignore everything in the root except the "wp-content" directory.
