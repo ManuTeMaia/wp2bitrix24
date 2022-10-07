@@ -593,7 +593,7 @@
 				file_put_contents($path . 'test.txt', var_export(['test'=>'data'], true));
 				if(!file_exists($path . 'test.txt'))
 				{
-					$return['logs_file_creat_error'] = 'check permission! recommended: folders: 775, files: 664';
+					$return['logs_file_creat_error'] = 'Check permission! recommended: folders: 775, files: 664';
 				}
 				unlink($path . 'test.txt');
 			}
