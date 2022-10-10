@@ -83,7 +83,9 @@ class WP2BTX_Admin_UI {
   				submit_button();
   			?>
   		</form>
-    <p>Check Server: <?php CRest::checkServer(); ?></p>
+    <h3>Check Server:</h3> 
+    <p><?php CRest::checkServer(); ?></p>
+    <hr />
     <p><a href="mailto:sup@manutemaia.com">Техническая поддержка</a></p>
   	</div>
   	<?php
