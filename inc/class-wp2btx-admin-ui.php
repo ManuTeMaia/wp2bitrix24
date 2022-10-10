@@ -78,14 +78,20 @@ class WP2BTX_Admin_UI {
   		<h2><?php echo get_admin_page_title() ?></h2>
   		<form action="options.php" method="POST">
   			<?php
-  				settings_fields( 'wp2btx_settings_page' );     // скрытые защитные поля
-  				do_settings_sections( 'wp2btx_settings_page' ); // секции с настройками (опциями). У нас она всего одна 'section_id'
+  				settings_fields( 'wp2btx_settings_page' );     
+  				do_settings_sections( 'wp2btx_settings_page' ); 
   				submit_button();
   			?>
   		</form>
     <h3>Check Server:</h3> 
     <p><?php CRest::checkServer(); ?></p>
-    <?php print_r(get_option('wp2btx_webhook')); ?>
+    <?php print_r(get_option('wp2btx_webhook')); 
+    $result = CRest::call("crm.lead.fields");
+
+echo '<pre>';
+	print_r($result);
+echo '</pre>';
+?>
     <hr />
     <p><a href="mailto:sup@manutemaia.com">Техническая поддержка</a></p>
   	</div>
