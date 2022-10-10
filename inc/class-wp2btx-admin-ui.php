@@ -19,7 +19,7 @@ class WP2BTX_Admin_UI {
    */
   function add_plugin_page(){
   	add_options_page(
-      'Настройки импорта в Bitrix24',
+      'Настройки импорта лидов в Bitrix24',
       'Bitrix24',
       'manage_options',
       'wp2btx_settings_page',
@@ -85,6 +85,7 @@ class WP2BTX_Admin_UI {
   		</form>
     <h3>Check Server:</h3> 
     <p><?php CRest::checkServer(); ?></p>
+    <?php print_r(get_option('wp2btx_webhook')); ?>
     <hr />
     <p><a href="mailto:sup@manutemaia.com">Техническая поддержка</a></p>
   	</div>
