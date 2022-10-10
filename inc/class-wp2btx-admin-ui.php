@@ -69,7 +69,7 @@ class WP2BTX_Admin_UI {
 
   function wp2btx_webhook_display(){
     $name = 'wp2btx_webhook';
-    printf('<input type="text" name="%s" value="%s" />', $name, get_option($name));
+    printf('<input type="text" name="%s" value="%s" style="width: 500px;" />', $name, get_option($name));
     ?>
     <p>Ссылка вида https://inc.bitrix24.ru/rest/1/15ngm7grby3uo7lr/ из личного кабинета Bitrix24</p>
     <?php
