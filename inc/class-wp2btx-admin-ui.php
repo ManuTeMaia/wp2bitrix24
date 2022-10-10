@@ -55,6 +55,15 @@ class WP2BTX_Admin_UI {
       $section = 'wp2btx_settings_page_main'
     );
 
+    register_setting('wp2btx_settings_page', 'wp2btx_user_id');
+    add_settings_field(
+      $id = 'wp2btx_user_id',
+      $title = 'ID пользователя',
+      $callback = [$this, 'wp2btx_user_id_display'],
+      $page = 'wp2btx_settings_page',
+      $section = 'wp2btx_settings_page_main'
+    );
+
   }
 
 
@@ -62,7 +71,7 @@ class WP2BTX_Admin_UI {
     $name = 'wp2btx_webhook';
     printf('<input type="text" name="%s" value="%s" />', $name, get_option($name));
     ?>
-    <p>Ссылка вида https://irsu.bitrix24.ru/rest/1/15ngm7grby3uo7lr/ из личного кабинета Bitrix24</p>
+    <p>Ссылка вида https://inc.bitrix24.ru/rest/1/15ngm7grby3uo7lr/ из личного кабинета Bitrix24</p>
     <?php
   }
 
@@ -71,6 +80,13 @@ class WP2BTX_Admin_UI {
     printf('<input type="text" name="%s" value="%s" />', $name, get_option($name, 'Store-'));
   }
 
+  function wp2btx_user_id_display(){
+    $name = 'wp2btx_user_id';
+    printf('<input type="text" name="%s" value="%s" />', $name, get_option($name, '1'));
+    ?>
+    <p>ID сотрудника можно узнать по ссылке. Обычно ссылка выглядит так: https://inc.bitrix24.ru/company/personal/user/8/, где 8 и будет ID сотрудника. Значит 8 нужно указать в данной опции.</p>
+    <?php
+  }
 
   function bitrix24s_options_page_output(){
   	?>
@@ -86,7 +102,7 @@ class WP2BTX_Admin_UI {
     <h3>Check Server:</h3> 
     <p><?php CRest::checkServer(); ?></p>
     <?php print_r(get_option('wp2btx_webhook')); 
-    $result = CRest::call("crm.lead.fields");
+    $result = CRest::call("profile");
 
 echo '<pre>';
 	print_r($result);
