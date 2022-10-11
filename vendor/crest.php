@@ -576,14 +576,14 @@
 			}
 
 			//creat setting file
-			file_put_contents(__DIR__ . '/settings_check.json', static::wrapData(['test'=>'data']));
-			if(!file_exists(__DIR__ . '/settings_check.json'))
+			file_put_contents(WP2BTX_PLUGIN_PATH . '/vendor/settings_check.json', static::wrapData(['test'=>'data']));
+			if(!file_exists(WP2BTX_PLUGIN_PATH . '/vendor/settings_check.json'))
 			{
 				$return['setting_creat_error'] = 'Check permission! Recommended: folders: 775, files: 664';
 			}
-			unlink(__DIR__ . '/settings_check.json');
+			unlink(WP2BTX_PLUGIN_PATH . '/vendor/settings_check.json');
 			//creat logs folder and files
-			$path = __DIR__ . '/logs/'.date("Y-m-d/H") . '/';
+			$path = WP2BTX_PLUGIN_PATH . '/vendor/logs/'.date("Y-m-d/H") . '/';
 			if(!mkdir($path, 0775, true) && !file_exists($path))
 			{
 				$return['logs_folder_creat_error'] = 'Check permission! Recommended: folders: 775, files: 664';

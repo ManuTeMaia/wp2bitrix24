@@ -19,8 +19,8 @@ class WP2BTX_Admin_UI {
    */
   function add_plugin_page(){
   	add_options_page(
-      'Настройки импорта лидов в Bitrix24',
-      'Bitrix24',
+      __('Export leads to Bitrix24 CRM settings', 'irs_btx'),
+      __('Export to Bitrix24', 'irs_btx'),
       'manage_options',
       'wp2btx_settings_page',
       [$this, 'bitrix24s_options_page_output']
@@ -34,13 +34,13 @@ class WP2BTX_Admin_UI {
   function plugin_settings(){
 
   	// параметры: $id, $title, $callback, $page
-  	add_settings_section( 'wp2btx_settings_page_main', 'Основные настройки', '', 'wp2btx_settings_page' );
+  	add_settings_section( 'wp2btx_settings_page_main', __('General Settings', 'irs_btx'), '', 'wp2btx_settings_page' );
 
 
     register_setting('wp2btx_settings_page', 'wp2btx_webhook');
     add_settings_field(
       $id = 'wp2btx_webhook',
-      $title = 'Вебхук для вызова rest api Bitrix24',
+      $title = __('CRest webhook', 'irs_btx'),
       $callback = [$this, 'wp2btx_webhook_display'],
       $page = 'wp2btx_settings_page',
       $section = 'wp2btx_settings_page_main'
@@ -49,7 +49,7 @@ class WP2BTX_Admin_UI {
     register_setting('wp2btx_settings_page', 'wp2btx_prefix');
     add_settings_field(
       $id = 'wp2btx_prefix',
-      $title = 'Префикс лида',
+      $title = __('Lead Prefix', 'irs_btx'),
       $callback = [$this, 'wp2btx_prefix_display'],
       $page = 'wp2btx_settings_page',
       $section = 'wp2btx_settings_page_main'
@@ -58,7 +58,7 @@ class WP2BTX_Admin_UI {
     register_setting('wp2btx_settings_page', 'wp2btx_user_id');
     add_settings_field(
       $id = 'wp2btx_user_id',
-      $title = 'ID пользователя',
+      $title = __('Bitrix24 User ID', 'irs_btx'),
       $callback = [$this, 'wp2btx_user_id_display'],
       $page = 'wp2btx_settings_page',
       $section = 'wp2btx_settings_page_main'
@@ -70,9 +70,7 @@ class WP2BTX_Admin_UI {
   function wp2btx_webhook_display(){
     $name = 'wp2btx_webhook';
     printf('<input type="text" name="%s" value="%s" style="width: 500px;" />', $name, get_option($name));
-    ?>
-    <p>Ссылка вида https://inc.bitrix24.ru/rest/1/15ngm7grby3uo7lr/ из личного кабинета Bitrix24</p>
-    <?php
+    printf('<p>%s https://inc.bitrix24.ru/rest/1/15ngm7grby3uo7lr/. %s</p>', __('Link like', 'irs_btx'), __('You can take it from Bitrix24', 'irs_btx'));
   }
 
   function wp2btx_prefix_display(){
@@ -83,9 +81,7 @@ class WP2BTX_Admin_UI {
   function wp2btx_user_id_display(){
     $name = 'wp2btx_user_id';
     printf('<input type="text" name="%s" value="%s" />', $name, get_option($name, '1'));
-    ?>
-    <p>ID сотрудника можно узнать по ссылке. Обычно ссылка выглядит так: https://inc.bitrix24.ru/company/personal/user/8/, где 8 и будет ID сотрудника. Значит 8 нужно указать в данной опции.</p>
-    <?php
+    printf('<p>%s https://inc.bitrix24.ru/company/personal/user/8/. %s</p>', __('You can get the Bitrix24 User ID from link like this', 'irs_btx'), __('In this example "8" is the User ID', 'irs_btx'));
   }
 
   function bitrix24s_options_page_output(){
@@ -99,19 +95,18 @@ class WP2BTX_Admin_UI {
   				submit_button();
   			?>
   		</form>
-    <h3>Check Server:</h3> 
+    <h3><?php _e('Check Server', 'irs_btx'); ?></h3> 
     <p><?php CRest::checkServer(); ?></p>
     <?php print_r(get_option('wp2btx_webhook')); 
     $result = CRest::call("profile");
-
-echo '<pre>';
-	print_r($result);
-echo '</pre>';
+        echo '<pre>';
+            print_r($result);
+        echo '</pre>';
 ?>
     <hr />
-    <p><a href="mailto:sup@manutemaia.com">Техническая поддержка</a></p>
+    <p><a href="mailto:sup@manutemaia.com"><?php _e('Support', 'irs_btx'); ?></a></p>
   	</div>
-  	<?php
+<?php
   }
 }
 new WP2BTX_Admin_UI;

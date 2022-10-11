@@ -8,8 +8,8 @@ class WP2BTX_Worker {
 
 	function submit_order_to_bitrix24($order_id){
 
-		    $orderdata = $this->get_orderdata_s($order_id); //получаем данные для запроса
-		    $res = $this->send_data($orderdata); //отправляем запрос и обрабатываем ответ
+		    $orderdata = $this->get_orderdata_s($order_id); 
+		    $res = $this->send_data($orderdata); 
 		    
 		}
 
@@ -17,18 +17,18 @@ class WP2BTX_Worker {
 		
         $order = new WC_Order($oid);
 		
-		$products_s = $this->get_order_data($oid); //детали заказа
+		$products_s = $this->get_order_data($oid); 
 
 		$url_print_invoice = admin_url('admin-ajax.php?print-order='.$oid.'&print-order-type=invoice&action=print_order');
 
 		$orderdata = array(
 			'TITLE' => get_option('wp2btx_prefix') . $oid,
-			'COMPANY_TITLE' => $order->get_billing_company($oid), //имя компании
-			'NAME' => $order->get_billing_first_name($oid), //имя заказчика
-			'LAST_NAME' => $order->get_billing_last_name($oid), //фамилия заказчика
-			'ADDRESS' => $order->get_billing_state().' '.$order->get_billing_address_1(), //адрес заказчика
-			'OPPORTUNITY' => $order->get_total(), //сумма заказа
-			'CURRENCY_ID' => $order->get_currency(), //валюта заказа
+			'COMPANY_TITLE' => $order->get_billing_company($oid), 
+			'NAME' => $order->get_billing_first_name($oid), 
+			'LAST_NAME' => $order->get_billing_last_name($oid), 
+			'ADDRESS' => $order->get_billing_state().' '.$order->get_billing_address_1(), 
+			'OPPORTUNITY' => $order->get_total(), 
+			'CURRENCY_ID' => $order->get_currency(), 
 			'ASSIGNED_BY_ID' => get_option('wp2btx_user_id'),
 			'COMMENTS' => strip_tags($products_s).' Печать счета: '.$url_print_invoice,
             'SOURCE_ID' => 'WEB',
@@ -45,8 +45,8 @@ class WP2BTX_Worker {
                 ], 
             ],
 		);
-		error_log('Order Data');
-		error_log(implode(', ',$orderdata));
+		//error_log('Order Data');
+		//error_log(implode(', ',$orderdata));
 
 		return $orderdata;
 	
@@ -70,7 +70,7 @@ class WP2BTX_Worker {
 
 
 	/**
-	* Send data to Bitrix24
+	* Send data to Bitrix24 via CRest
 	*/
 	function send_data($orderdata) {
 
@@ -100,6 +100,4 @@ add_action('woocommerce_order_status_completed','submit_order_to_lead', 10,1);
 function submit_order_to_lead($order_id){
 	$w = new WP2BTX_Worker;
 	$w->submit_order_to_bitrix24($order_id);
-	error_log("Order ID: ");
-	error_log($order_id);
 }
